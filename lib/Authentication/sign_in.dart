@@ -1,8 +1,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:minor_project/Authentication/sign_up.dart';
 import 'package:minor_project/Auxiliary/custom_class.dart';
 import 'package:minor_project/Services/authentication.dart';
+
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 
@@ -34,6 +36,7 @@ class _SignInState extends State<SignIn> {
     double hit = displayHeight(context);
     double wid = displayWidth(context);
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       key: key,
       body: SingleChildScrollView(
         child: Center(
@@ -44,7 +47,7 @@ class _SignInState extends State<SignIn> {
               Container(
                   height: 220,
                   child: Image.asset(
-                    "assets/dellologo.png",
+                    "assets/logo.png",
                   )),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
@@ -103,11 +106,13 @@ class _SignInState extends State<SignIn> {
                           ),
                           Container(
                             //color: Color.fromRGBO(241,243,241, 1),
+                            // color: Colors.grey[100],
                             width: 200,
                             //height: 200,
                             child: new PinCodeTextField(
                               appContext: context,
                               length: 6,
+                              backgroundColor: Colors.grey[100],
                               obsecureText: false,
                               animationType: AnimationType.fade,
                               pinTheme: PinTheme(
@@ -127,7 +132,7 @@ class _SignInState extends State<SignIn> {
                               //errorAnimationController: errorController,
                               controller: otpController,
                               onCompleted: (v) {
-                                print("Completed");
+                                print("Completed" + v);
                               },
                               onChanged: (value) {
                                 print(value);
@@ -160,38 +165,57 @@ class _SignInState extends State<SignIn> {
                   alignment: Alignment(.6, -1),
                   child: codeSent
                       ? Text("Submit the OTP Code",
-                          style: TextStyle(color: Colors.green))
-                      : Text("Get OTP", style: TextStyle(color: Colors.green)),
-                  // child: Text("Get OTP",style: TextStyle(color: Colors.green),),
+                          style: TextStyle(color: Colors.blue))
+                      : Text("Get OTP", style: TextStyle(color: Colors.blue)),
+                  // child: Text("Get OTP",style: TextStyle(color: Colors.blue),),
                 ),
               ),
-              FlatButton(
-                  onPressed: () {},
-                  child: Align(
-                    alignment: Alignment(0, -1),
-                    child: Text("Or Login By Email"),
-                  )),
+              // FlatButton(
+              //     onPressed: () {},
+              //     child: Align(
+              //       alignment: Alignment(0, -1),
+              //       child: Text("Or Login By Email"),
+              //     )),
+              Padding(padding: EdgeInsets.all(20.0),),
+              Container(
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.all(Radius.circular(30))),
+                  height: 40,
+                  width: wid * .5,
+                  child: FlatButton(
+                      onPressed: () {
+                        if(verified){
+                          Navigator.pushNamedAndRemoveUntil(context, '/homescreen', (route) => false);
+                        }
+                        else{
+                          key.currentState.showSnackBar(SnackBar(content: Text('Please Verify Phone !! '), duration: Duration(seconds: 3)));
+                        }
+                      },
+                      child: Text("Log in", style: new TextStyle(color: Colors.white, fontSize: 20.0, letterSpacing: 2.0,)))
+                ),
+                Padding(padding: EdgeInsets.all(12.0),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: (displayWidth(context) / 2)  -  35,
+                      
+                      child: Divider(thickness: 2.0,)),
+                    Text('OR'),
+                    Container(
+                      width: (displayWidth(context) / 2)  -  35,
+                      
+                      child: Divider(thickness: 2.0,)),
+                  ],
+                ),
               Container(
                 height: 70,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Container(
-                      width: 150,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/j.png'),
-                            fit: BoxFit.fitHeight),
-                      ),
-                      child: Align(
-                          alignment: Alignment(0.3, -.15),
-                          child: Text(
-                            "Signup",
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          )),
-                    ),
+                    
                     Container(
                       width: 150,
                       height: 70,
@@ -210,38 +234,29 @@ class _SignInState extends State<SignIn> {
                   ],
                 ),
               ),
-              Container(
-                  decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.all(Radius.circular(30))),
-                  height: 40,
-                  width: wid * .5,
-                  child: FlatButton(
-                      onPressed: () {
-                        if(verified){
-                          Navigator.pushNamedAndRemoveUntil(context, '/homescreen', (route) => false);
-                        }
-                        else{
-                          key.currentState.showSnackBar(SnackBar(content: Text('Please Verify Phone !! '), duration: Duration(seconds: 3)));
-                        }
-                      },
-                      child: Text("Sign in"))),
+              
+
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 25, 0, 20),
-                child: Container(
-                    height: 27,
-                    child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: RichText(
-                            text: TextSpan(
-                                style: TextStyle(
-                                    color: Colors.black87, fontSize: 20),
-                                children: [
-                              TextSpan(text: "Don\'t have an Account? "),
-                              TextSpan(
-                                  text: "Register",
-                                  style: TextStyle(color: Colors.green))
-                            ])))),
+                padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, new MaterialPageRoute(builder: (context) => SignupPage()));
+                  },
+                                  child: Container(
+                      height: 27,
+                      child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: RichText(
+                              text: TextSpan(
+                                  style: TextStyle(
+                                      color: Colors.black87, fontSize: 18.0),
+                                  children: [
+                                TextSpan(text: "Don\'t have an Account? "),
+                                TextSpan(
+                                    text: "Register",
+                                    style: TextStyle(color: Colors.blueAccent))
+                              ])))),
+                ),
               ),
             ],
           ),

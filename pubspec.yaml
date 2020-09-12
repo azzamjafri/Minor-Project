@@ -31,7 +31,6 @@ dependencies:
   firebase_auth: ^0.16.1
   cloud_firestore: ^0.13.6
   rflutter_alert: ^1.0.3
-  pin_code_fields: ^5.0.1
   google_sign_in: ^4.5.1
 
 dev_dependencies:

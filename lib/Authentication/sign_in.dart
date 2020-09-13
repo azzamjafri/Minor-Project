@@ -178,7 +178,7 @@ class _SignInState extends State<SignIn> {
                               ),
                             ),
                             hintText: "Enter Password"),
-                        keyboardType: TextInputType.number,
+                        
                         validator: (value) => value.length < 8
                             ? 'Password must be 8 characters long'
                             : null,

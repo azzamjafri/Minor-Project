@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minor_project/Services/authentication.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,7 +14,9 @@ class _HomePageState extends State<HomePage> {
         title: new Text('Minor project'),
         centerTitle: true,
       ),
-      body: Center(child: Text('Home Page'),),
+      body: Center(
+        child: Text('Welcome, ' + user.email + ' !'),
+      ),
     );
   }
 }

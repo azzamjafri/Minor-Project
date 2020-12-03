@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:minor_project/Authentication/sign_in.dart';
 import 'package:minor_project/Auxiliary/custom_class.dart';
 import 'package:minor_project/Home/home.dart';
 import 'package:minor_project/Services/authentication.dart';
@@ -181,7 +180,7 @@ class _SignupDetailsState extends State<SignupDetails> {
   }
 
   verify() {
-    print(user.uid + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    // print(user.uid + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
     Firestore.instance.collection('users').document(user.uid).updateData({
       "department": departmentValue,
       "course": courseController.text,

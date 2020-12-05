@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const _maxLines = 10;
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -22,72 +22,125 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       drawer: MyDrawer(),
-      // body: Center(
-      //   child: Text('Welcome, ' + user.email + ' !'),
-      // ),
+      
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-            ),
-            Container(
-              margin: EdgeInsets.all(12.0),
-              height: _maxLines * 12.0,
-              child: new TextField(
-                controller: _queryController,
-                maxLines: _maxLines,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: maroonRedColor, width: 2.0)),
-                  hintText:
-                      'Please describe your problem or suggestion in detail, we will follow up and solve it as soon as possible.',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-            ),
-            ListView.builder(
-              physics: ClampingScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 10,
-              scrollDirection: Axis.vertical,
-              
-              padding: const EdgeInsets.all(5.0),
-              itemBuilder: (BuildContext context, int position) {
-                return new ListTile(
-                  title: new Text(
-                    "RAndom Text",
-                    style: new TextStyle(fontSize: 14.9),
-                  ),
-                  subtitle: new Text(
-                    "Some more random text",
-                    style: new TextStyle(
-                        fontSize: 13.4,
-                        color: brownColor,
-                        fontStyle: FontStyle.italic),
-                  ),
-                  leading: new CircleAvatar(
-                    backgroundColor: blueColor,
-                    child: new Text(
-                      "${user.email.substring(0, 3).toUpperCase()}",
-                      style: new TextStyle(
-                          fontSize: 19.2, color: Colors.deepOrangeAccent),
-                    ),
-                  ),
-                  onTap: () {
-                    // _showOnTapMessage(context, "Text hi text");
-                    Navigator.push(context, new MaterialPageRoute(builder: (context) => new Post()));
-                  },
-                );
-              },
-            ),
+
+            Padding(padding: const EdgeInsets.all(6.0)),
+
+            addPost(),
+
+            postButton(),
+
+            Padding(padding: const EdgeInsets.all(8.0)),
+
+            divider(),
+            
+            Padding(padding: const EdgeInsets.all(4.0)),
+
+            listOfPosts(),
           ],
         ),
       ),
+    );
+  }
+
+
+  divider() {
+
+    return Container(
+              width: MediaQuery.of(context).size.width - 40,
+              child: Divider(thickness: 2.0, color: Colors.indigoAccent[100],));
+
+  }
+
+  postButton() {
+
+    return Padding(
+      padding: EdgeInsets.only(right: 20.0),
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          RaisedButton(
+            onPressed: (){},
+            elevation: 3.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+              side: BorderSide(color: Colors.black)
+            ),
+            textColor: Colors.white,
+            color: Colors.blueGrey,
+            
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(Icons.add),
+                Padding(padding: EdgeInsets.all(3.5),),
+                Text("POST", style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, letterSpacing: 1.2, fontSize: 16.6),)
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+  }
+
+  addPost() {
+    const _maxLines = 10;
+    return Container(
+      margin: EdgeInsets.all(12.0),
+      height: _maxLines * 14.5,
+      child: new TextField(
+        controller: _queryController,
+        maxLines: _maxLines,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: maroonRedColor, width: 2.0)),
+          hintText:
+              'Please describe your problem or suggestion in detail, we will follow up and solve it as soon as possible.',
+        ),
+      ),
+    );
+  }
+
+  listOfPosts() {
+    return ListView.builder(
+      physics: ClampingScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: 10,
+      scrollDirection: Axis.vertical,
+      padding: const EdgeInsets.all(5.0),
+      itemBuilder: (BuildContext context, int position) {
+        return new ListTile(
+          title: new Text(
+            "Heading for the thread",
+            style: new TextStyle(fontSize: 14.9),
+          ),
+          subtitle: new Text(
+            "Some more random text from the post",
+            style: new TextStyle(
+                fontSize: 13.4, color: brownColor, fontStyle: FontStyle.italic),
+          ),
+          leading: new CircleAvatar(
+            radius: 30.0,
+            
+            backgroundColor: blueColor,
+            child: new Text(
+              "${user.email.substring(0, 3).toUpperCase()}",
+              style:
+                  new TextStyle(fontSize: 19.2, color: Colors.deepOrangeAccent),
+            ),
+          ),
+          onTap: () {
+            // _showOnTapMessage(context, "Text hi text");
+            Navigator.push(context,
+                new MaterialPageRoute(builder: (context) => new Post()));
+          },
+        );
+      },
     );
   }
 

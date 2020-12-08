@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
 
             Padding(padding: const EdgeInsets.all(8.0)),
 
-            divider(),
+            divider(Colors.indigoAccent[100], 40, 2.0),
             
             Padding(padding: const EdgeInsets.all(4.0)),
 
@@ -48,11 +48,11 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-  divider() {
+  divider(c, w, t) {
 
     return Container(
-              width: MediaQuery.of(context).size.width - 40,
-              child: Divider(thickness: 2.0, color: Colors.indigoAccent[100],));
+              width: MediaQuery.of(context).size.width - w,
+              child: Divider(thickness: t, color: c,));
 
   }
 
@@ -114,31 +114,39 @@ class _HomePageState extends State<HomePage> {
       scrollDirection: Axis.vertical,
       padding: const EdgeInsets.all(5.0),
       itemBuilder: (BuildContext context, int position) {
-        return new ListTile(
-          title: new Text(
-            "Heading for the thread",
-            style: new TextStyle(fontSize: 14.9),
-          ),
-          subtitle: new Text(
-            "Some more random text from the post",
-            style: new TextStyle(
-                fontSize: 13.4, color: brownColor, fontStyle: FontStyle.italic),
-          ),
-          leading: new CircleAvatar(
-            radius: 30.0,
-            
-            backgroundColor: blueColor,
-            child: new Text(
-              "${user.email.substring(0, 3).toUpperCase()}",
-              style:
-                  new TextStyle(fontSize: 19.2, color: Colors.deepOrangeAccent),
+        return Column(
+          children: [
+
+
+            new ListTile(
+              title: new Text(
+                "Heading for the thread",
+                style: new TextStyle(fontSize: 14.9),
+              ),
+              subtitle: new Text(
+                "Some more random text from the post",
+                style: new TextStyle(
+                    fontSize: 13.4, color: brownColor, fontStyle: FontStyle.italic),
+              ),
+              leading: new CircleAvatar(
+                radius: 30.0,
+                
+                backgroundColor: blueColor,
+                child: new Text(
+                  "${user.email.substring(0, 3).toUpperCase()}",
+                  style:
+                      new TextStyle(fontSize: 19.2, color: Colors.deepOrangeAccent),
+                ),
+              ),
+              onTap: () {
+                // _showOnTapMessage(context, "Text hi text");
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => new Post()));
+              },
             ),
-          ),
-          onTap: () {
-            // _showOnTapMessage(context, "Text hi text");
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => new Post()));
-          },
+
+            divider(Colors.blueGrey, 120.0, 0.85),
+          ],
         );
       },
     );

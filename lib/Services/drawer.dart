@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:minor_project/Services/authentication.dart';
 import 'package:minor_project/colors.dart';
 
-
-
 class MyDrawer extends StatefulWidget {
-
   @override
   _MyDrawerState createState() => _MyDrawerState();
 }
@@ -16,7 +13,11 @@ class _MyDrawerState extends State<MyDrawer> {
   @override
   void initState() {
     super.initState();
-    Firestore.instance.collection('users').document(user.uid).get().then((value) {
+    Firestore.instance
+        .collection('users')
+        .document(user.uid)
+        .get()
+        .then((value) {
       print(value.data);
       print("************************************");
       setState(() => name = value.data['name']);
@@ -31,14 +32,21 @@ class _MyDrawerState extends State<MyDrawer> {
           Container(
             color: blueColor,
             child: DrawerHeader(
-              child: Center(
+                child: Center(
               child: Container(
                 color: blueColor,
                 child: Column(
                   children: [
-                    Align(alignment: Alignment(-1,-1),child: Icon(Icons.close, color: Colors.white,)),
+                    Align(
+                        alignment: Alignment(-1, -1),
+                        child: IconButton(
+                          
+                          color: Colors.white,
+                          onPressed: () => Navigator.pop(context),
+                          icon: Icon(Icons.close),
+                        )),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(35,0,0,0),
+                      padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
                       child: Center(
                         //alignment: Alignment(1,1),
                         child: Row(
@@ -46,16 +54,23 @@ class _MyDrawerState extends State<MyDrawer> {
                             // Icon(Icons.person_pin,size: 70,),
                             Container(
                               height: 75.0,
-                              width: 75.0,
+                              width: 50.0,
                               // child: Image.asset('', color: Colors.black,)
-                              ),
+                            ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text("${user.email}", style: TextStyle(color: Colors.white),),
+                                Text(
+                                  "${user.email}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(10,15,0,0),
-                                  child: Text("Jamia Millia Islamia", style: TextStyle(color: Colors.white),),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 15, 0, 0),
+                                  child: Text(
+                                    "Jamia Millia Islamia",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ],
                             )
@@ -63,24 +78,32 @@ class _MyDrawerState extends State<MyDrawer> {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/rateus');
-                      },
-                                          child: Padding(
-                        padding: const EdgeInsets.only(top:18.0),
-                        child: Align(alignment: Alignment(1,1),child: Text("Rate Us", style: TextStyle(color: Colors.white, decoration: TextDecoration.underline, decorationThickness: 1.5),)),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.pushNamed(context, '/rateus');
+                    //   },
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(top: 18.0),
+                    //     child: Align(
+                    //         alignment: Alignment(1, 1),
+                    //         child: Text(
+                    //           "Rate Us",
+                    //           style: TextStyle(
+                    //               color: Colors.white,
+                    //               decoration: TextDecoration.underline,
+                    //               decorationThickness: 1.5),
+                    //         )),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
             )),
           ),
           GestureDetector(
-            onTap: (){
+            onTap: () {
               Navigator.pushNamed(context, '/');
-              },
+            },
             child: ListTile(
               onLongPress: null,
               title: Container(
@@ -92,29 +115,23 @@ class _MyDrawerState extends State<MyDrawer> {
                       padding: const EdgeInsets.only(right: 35.0),
                       // child: Image.asset('assets/Icon awesome-mobile-alt.png'),
                     ),
-                    
                     Text(
                       "Something here",
                       style: TextStyle(
-                        //fontSize: 15,
+                          //fontSize: 15,
                           color: blueColor),
                     ),
-                    Spacer(),Spacer(),
+                    Spacer(),
+                    Spacer(),
                     Padding(
                       padding: const EdgeInsets.all(1.0),
-                      child: Icon(Icons.arrow_forward_ios,color: blueColor),
+                      child: Icon(Icons.arrow_forward_ios, color: blueColor),
                     ),
                   ],
                 ),
               ),
             ),
           ),
-          
-
-
-
-
-
         ],
       ),
     );
